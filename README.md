@@ -1,9 +1,8 @@
 # Бэкенд для онлайн редактора визуальных новелл
 
-
----
-
 ### Установка проекта
+
+Убедитесь, что у вас установлен [JDK версии 17](https://www.oracle.com/java/technologies/downloads/).
 
 ```
 ./mvnw dependency:resolve
