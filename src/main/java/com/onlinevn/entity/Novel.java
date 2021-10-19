@@ -13,12 +13,11 @@ public class Novel {
     private Integer status;
     private Integer viewCount;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    private Frame firstFrame;
+    private Integer firstFrame;
 
     protected Novel() {}
 
-    public Novel(String name, String description, Integer genre, Integer status, Integer viewCount, Frame firstFrame) {
+    public Novel(String name, String description, Integer genre, Integer status, Integer viewCount, Integer firstFrame) {
         this.name = name;
         this.description = description;
         this.genre = genre;
@@ -29,6 +28,10 @@ public class Novel {
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -71,11 +74,11 @@ public class Novel {
         this.viewCount = viewCount;
     }
 
-    public Frame getFirstFrame() {
+    public Integer getFirstFrame() {
         return firstFrame;
     }
 
-    public void setFirstFrame(Frame firstFrame) {
+    public void setFirstFrame(Integer firstFrame) {
         this.firstFrame = firstFrame;
     }
 

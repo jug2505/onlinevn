@@ -1,45 +1,53 @@
 package com.onlinevn.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 public class Frame {
     private @Id @GeneratedValue Integer id;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    private Novel novel;
-
+    private Integer novel;
     private Integer frameType;
     private String text;
     private String name;
+    private Integer nextFrame;
+    private Integer prevFrame;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Frame nextFrame;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    private Frame prevFrame;
+    @ManyToMany
+    @JoinTable(
+            name = "frame_item",
+            joinColumns = {@JoinColumn(name = "frame_id")},
+            inverseJoinColumns = {@JoinColumn(name = "item_id")}
+    )
+    private List<Item> items = new ArrayList<>();
 
     protected Frame() {}
 
-    public Frame(Novel novel, Integer frameType, String text, String name, Frame nextFrame, Frame prevFrame) {
+    public Frame(Integer novel, Integer frameType, String text, String name, Integer prevFrame, Integer nextFrame, List<Item> items) {
         this.novel = novel;
         this.frameType = frameType;
         this.text = text;
         this.name = name;
         this.nextFrame = nextFrame;
         this.prevFrame = prevFrame;
+        this.items = items;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public Novel getNovel() {
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getNovel() {
         return novel;
     }
 
-    public void setNovel(Novel novel) {
+    public void setNovel(Integer novel) {
         this.novel = novel;
     }
 
@@ -67,20 +75,28 @@ public class Frame {
         this.name = name;
     }
 
-    public Frame getNextFrame() {
+    public Integer getNextFrame() {
         return nextFrame;
     }
 
-    public void setNextFrame(Frame nextFrame) {
+    public void setNextFrame(Integer nextFrame) {
         this.nextFrame = nextFrame;
     }
 
-    public Frame getPrevFrame() {
+    public Integer getPrevFrame() {
         return prevFrame;
     }
 
-    public void setPrevFrame(Frame prevFrame) {
+    public void setPrevFrame(Integer prevFrame) {
         this.prevFrame = prevFrame;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
     @Override
@@ -88,12 +104,12 @@ public class Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Frame frame = (Frame) o;
-        return id.equals(frame.id) && novel.equals(frame.novel) && frameType.equals(frame.frameType) && text.equals(frame.text) && name.equals(frame.name) && Objects.equals(nextFrame, frame.nextFrame) && Objects.equals(prevFrame, frame.prevFrame);
+        return id.equals(frame.id) && Objects.equals(novel, frame.novel) && Objects.equals(frameType, frame.frameType) && Objects.equals(text, frame.text) && Objects.equals(name, frame.name) && Objects.equals(nextFrame, frame.nextFrame) && Objects.equals(prevFrame, frame.prevFrame) && Objects.equals(items, frame.items);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, novel, frameType, text, name, nextFrame, prevFrame);
+        return Objects.hash(id, novel, frameType, text, name, nextFrame, prevFrame, items);
     }
 
     @Override
@@ -106,6 +122,7 @@ public class Frame {
                 ", name='" + name + '\'' +
                 ", nextFrame=" + nextFrame +
                 ", prevFrame=" + prevFrame +
+                ", items=" + items +
                 '}';
     }
 }

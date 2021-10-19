@@ -23,6 +23,10 @@ public class Asset {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getFilename() {
         return filename;
     }
