@@ -17,6 +17,16 @@ public class Novel {
 
     protected Novel() {}
 
+    public Novel(Integer id, String name, String description, Integer genre, Integer status, Integer viewCount, Integer firstFrame) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.genre = genre;
+        this.status = status;
+        this.viewCount = viewCount;
+        this.firstFrame = firstFrame;
+    }
+
     public Novel(String name, String description, Integer genre, Integer status, Integer viewCount, Integer firstFrame) {
         this.name = name;
         this.description = description;

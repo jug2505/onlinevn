@@ -14,6 +14,12 @@ public class Asset {
 
     protected Asset() {}
 
+    public Asset(Integer id, String filename, String type) {
+        this.id = id;
+        this.filename = filename;
+        this.type = type;
+    }
+
     public Asset(String filename, String type) {
         this.filename = filename;
         this.type = type;

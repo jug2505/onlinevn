@@ -25,6 +25,17 @@ public class Frame {
 
     protected Frame() {}
 
+    public Frame(Integer id, Integer novel, Integer frameType, String text, String name, Integer nextFrame, Integer prevFrame, List<Item> items) {
+        this.id = id;
+        this.novel = novel;
+        this.frameType = frameType;
+        this.text = text;
+        this.name = name;
+        this.nextFrame = nextFrame;
+        this.prevFrame = prevFrame;
+        this.items = items;
+    }
+
     public Frame(Integer novel, Integer frameType, String text, String name, Integer prevFrame, Integer nextFrame, List<Item> items) {
         this.novel = novel;
         this.frameType = frameType;

@@ -13,6 +13,13 @@ public class Item {
 
     protected Item() {}
 
+    public Item(Integer id, Integer coordX, Integer coordY, Asset asset) {
+        this.id = id;
+        this.coordX = coordX;
+        this.coordY = coordY;
+        this.asset = asset;
+    }
+
     public Item(Integer coordX, Integer coordY, Asset asset) {
         this.coordX = coordX;
         this.coordY = coordY;
