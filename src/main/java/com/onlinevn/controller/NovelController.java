@@ -1,11 +1,7 @@
 package com.onlinevn.controller;
 
-import com.onlinevn.entity.Asset;
 import com.onlinevn.entity.Frame;
-import com.onlinevn.entity.Item;
 import com.onlinevn.entity.Novel;
-import com.onlinevn.repository.NovelRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
