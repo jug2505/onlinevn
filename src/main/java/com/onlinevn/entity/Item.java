@@ -9,21 +9,21 @@ public class Item {
     private @Id @GeneratedValue Integer id;
     private Integer coordX;
     private Integer coordY;
-    private @OneToOne(fetch = FetchType.EAGER) Asset asset;
+    private Integer assetId;
 
     protected Item() {}
 
-    public Item(Integer id, Integer coordX, Integer coordY, Asset asset) {
+    public Item(Integer id, Integer coordX, Integer coordY, Integer assetId) {
         this.id = id;
         this.coordX = coordX;
         this.coordY = coordY;
-        this.asset = asset;
+        this.assetId = assetId;
     }
 
-    public Item(Integer coordX, Integer coordY, Asset asset) {
+    public Item(Integer coordX, Integer coordY, Integer assetId) {
         this.coordX = coordX;
         this.coordY = coordY;
-        this.asset = asset;
+        this.assetId = assetId;
     }
 
     public Integer getId() {
@@ -50,12 +50,12 @@ public class Item {
         this.coordY = coordY;
     }
 
-    public Asset getAsset() {
-        return asset;
+    public Integer getAssetId() {
+        return assetId;
     }
 
-    public void setAsset(Asset asset) {
-        this.asset = asset;
+    public void setAssetId(Integer asset) {
+        this.assetId = asset;
     }
 
     @Override
@@ -63,12 +63,12 @@ public class Item {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return id.equals(item.id) && coordX.equals(item.coordX) && coordY.equals(item.coordY) && asset.equals(item.asset);
+        return id.equals(item.id) && coordX.equals(item.coordX) && coordY.equals(item.coordY) && assetId.equals(item.assetId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, coordX, coordY, asset);
+        return Objects.hash(id, coordX, coordY, assetId);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class Item {
                 "id=" + id +
                 ", coordX=" + coordX +
                 ", coordY=" + coordY +
-                ", asset=" + asset +
+                ", asset=" + assetId +
                 '}';
     }
 }

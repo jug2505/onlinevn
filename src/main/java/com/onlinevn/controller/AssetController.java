@@ -1,11 +1,9 @@
 package com.onlinevn.controller;
 
 import com.onlinevn.entity.Asset;
-import com.onlinevn.repository.AssetRepository;
 import com.onlinevn.service.AssetService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @CrossOrigin
@@ -13,7 +11,7 @@ import java.util.List;
 @RequestMapping("/asset")
 public class AssetController {
 
-    private AssetService assetService;
+    private final AssetService assetService;
 
     public AssetController(AssetService assetService) {
         this.assetService = assetService;

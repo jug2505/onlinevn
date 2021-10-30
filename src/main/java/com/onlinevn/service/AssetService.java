@@ -11,12 +11,13 @@ import java.util.List;
 @Service
 public class AssetService {
 
-    private AssetRepository assetRepository;
+    private final AssetRepository assetRepository;
 
     public AssetService(AssetRepository assetRepository) {
         this.assetRepository = assetRepository;
     }
 
+    @Transactional
     public Asset createAsset(Asset asset) {
         return assetRepository.findById(asset.getId())
                 .orElse(assetRepository.save(asset));
