@@ -4,6 +4,16 @@
 
 Убедитесь, что у вас установлен [JDK версии 17](https://www.oracle.com/java/technologies/downloads/).
 
+БД Mysql
+
+По-умолчанию:
+user - mysql
+password - 1232
+```
+create database onlinevn;
+grant all on onlinevn.* to mysql;
+```
+
 ```
 ./mvnw dependency:resolve
 ```
