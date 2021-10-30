@@ -11,18 +11,21 @@ public class Asset {
     private @Id @GeneratedValue Integer id;
     private String filename;
     private String type;
+    private Integer novelId;
 
     protected Asset() {}
 
-    public Asset(Integer id, String filename, String type) {
+    public Asset(Integer id, String filename, String type, Integer novelId) {
         this.id = id;
         this.filename = filename;
         this.type = type;
+        this.novelId = novelId;
     }
 
-    public Asset(String filename, String type) {
+    public Asset(String filename, String type, Integer novelId) {
         this.filename = filename;
         this.type = type;
+        this.novelId = novelId;
     }
 
     public Integer getId() {
@@ -49,17 +52,25 @@ public class Asset {
         this.type = type;
     }
 
+    public Integer getNovelId() {
+        return novelId;
+    }
+
+    public void setNovelId(Integer novelId) {
+        this.novelId = novelId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Asset asset = (Asset) o;
-        return id.equals(asset.id) && filename.equals(asset.filename) && type.equals(asset.type);
+        return Objects.equals(id, asset.id) && Objects.equals(filename, asset.filename) && Objects.equals(type, asset.type) && Objects.equals(novelId, asset.novelId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, filename, type);
+        return Objects.hash(id, filename, type, novelId);
     }
 
     @Override
@@ -68,6 +79,7 @@ public class Asset {
                 "id=" + id +
                 ", filename='" + filename + '\'' +
                 ", type='" + type + '\'' +
+                ", novelId=" + novelId +
                 '}';
     }
 }
