@@ -18,13 +18,16 @@ public class AssetController {
     }
 
     @GetMapping
-    public List<Asset> list() {
-        return assetService.readAll();
-    }
+    public List<Asset> list(@RequestParam(name = "novelId", required = false) Integer novelId) {
+        assetService.createAsset(new Asset(1, "1", "1", 1));
 
-    @GetMapping
-    public List<Asset> getByNovelId(@RequestParam(name = "novelId") Integer novelId) {
-        return assetService.readAssetsByNovelId(novelId);
+        List<Asset> result;
+        if (novelId != null) {
+            result = assetService.readAssetsByNovelId(novelId);
+        } else {
+            result = assetService.readAll();
+        }
+        return result;
     }
 
     @GetMapping("{id}")
@@ -41,5 +44,10 @@ public class AssetController {
     public Asset update(@PathVariable Integer id, @RequestBody Asset asset) {
         asset.setId(id);
         return assetService.updateAsset(asset);
+    }
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Integer id) {
+        assetService.delete(id);
     }
 }

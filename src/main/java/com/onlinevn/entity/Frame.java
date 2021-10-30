@@ -8,7 +8,7 @@ import java.util.Objects;
 @Entity
 public class Frame {
     private @Id @GeneratedValue Integer id;
-    private Integer novel;
+    private Integer novelId;
     private Integer frameType;
     private String text;
     private String name;
@@ -25,9 +25,9 @@ public class Frame {
 
     protected Frame() {}
 
-    public Frame(Integer id, Integer novel, Integer frameType, String text, String name, Integer nextFrame, Integer prevFrame, List<Item> items) {
+    public Frame(Integer id, Integer novelId, Integer frameType, String text, String name, Integer nextFrame, Integer prevFrame, List<Item> items) {
         this.id = id;
-        this.novel = novel;
+        this.novelId = novelId;
         this.frameType = frameType;
         this.text = text;
         this.name = name;
@@ -36,8 +36,8 @@ public class Frame {
         this.items = items;
     }
 
-    public Frame(Integer novel, Integer frameType, String text, String name, Integer prevFrame, Integer nextFrame, List<Item> items) {
-        this.novel = novel;
+    public Frame(Integer novelId, Integer frameType, String text, String name, Integer prevFrame, Integer nextFrame, List<Item> items) {
+        this.novelId = novelId;
         this.frameType = frameType;
         this.text = text;
         this.name = name;
@@ -54,12 +54,12 @@ public class Frame {
         this.id = id;
     }
 
-    public Integer getNovel() {
-        return novel;
+    public Integer getNovelId() {
+        return novelId;
     }
 
-    public void setNovel(Integer novel) {
-        this.novel = novel;
+    public void setNovelId(Integer novel) {
+        this.novelId = novel;
     }
 
     public Integer getFrameType() {
@@ -115,19 +115,19 @@ public class Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Frame frame = (Frame) o;
-        return id.equals(frame.id) && Objects.equals(novel, frame.novel) && Objects.equals(frameType, frame.frameType) && Objects.equals(text, frame.text) && Objects.equals(name, frame.name) && Objects.equals(nextFrame, frame.nextFrame) && Objects.equals(prevFrame, frame.prevFrame) && Objects.equals(items, frame.items);
+        return id.equals(frame.id) && Objects.equals(novelId, frame.novelId) && Objects.equals(frameType, frame.frameType) && Objects.equals(text, frame.text) && Objects.equals(name, frame.name) && Objects.equals(nextFrame, frame.nextFrame) && Objects.equals(prevFrame, frame.prevFrame) && Objects.equals(items, frame.items);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, novel, frameType, text, name, nextFrame, prevFrame, items);
+        return Objects.hash(id, novelId, frameType, text, name, nextFrame, prevFrame, items);
     }
 
     @Override
     public String toString() {
         return "Frame{" +
                 "id=" + id +
-                ", novel=" + novel +
+                ", novel=" + novelId +
                 ", frameType=" + frameType +
                 ", text='" + text + '\'' +
                 ", name='" + name + '\'' +

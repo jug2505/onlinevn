@@ -19,7 +19,6 @@ public class ItemController {
 
     @GetMapping
     public List<Item> list() {
-        itemService.createItem(new Item(1, 12, 12, 1));
         return itemService.readAll();
     }
 
@@ -37,5 +36,10 @@ public class ItemController {
     public Item update(@PathVariable Integer id, @RequestBody Item item) {
         item.setId(id);
         return itemService.updateItem(item);
+    }
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Integer id) {
+        itemService.delete(id);
     }
 }
