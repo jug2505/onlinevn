@@ -35,6 +35,10 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
+    public boolean existsById(Integer id) {
+        return itemRepository.existsById(id);
+    }
+
     @Transactional
     public Item updateItem(Item item) {
         if (itemRepository.existsById(item.getId())) {

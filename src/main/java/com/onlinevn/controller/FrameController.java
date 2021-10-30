@@ -2,6 +2,7 @@ package com.onlinevn.controller;
 
 import com.onlinevn.entity.Frame;
 import com.onlinevn.entity.Item;
+import com.onlinevn.exceptions.NotFoundException;
 import com.onlinevn.service.FrameService;
 import com.onlinevn.service.ItemService;
 import org.springframework.web.bind.annotation.*;
@@ -34,11 +35,9 @@ public class FrameController {
 
     @PostMapping
     public Frame create(@RequestBody Frame frame) {
-        List<Item> items = new ArrayList<>();
-        for (Item item: frame.getItems()) {
-            items.add(itemService.createItem(item));
+        for (Integer itemId: frame.getItems()) {
+            if (!itemService.existsById(itemId)) throw new NotFoundException();
         }
-        frame.setItems(items);
         return frameService.createFrame(frame);
     }
 
@@ -50,9 +49,9 @@ public class FrameController {
 
     @PatchMapping("{id}")
     public Frame addItem(@PathVariable Integer id, @RequestParam(name = "itemId") Integer itemId) {
+        if (!itemService.existsById(itemId)) throw new NotFoundException();
         Frame frame = frameService.readFrameById(id);
-        Item item = itemService.readItemById(itemId);
-        return frameService.addItemToFrame(frame, item);
+        return frameService.addItemToFrame(frame, itemId);
     }
 
     @DeleteMapping("{id}")
@@ -61,8 +60,8 @@ public class FrameController {
             frameService.delete(id);
         } else {
             Frame frame = frameService.readFrameById(id);
-            Item item = itemService.readItemById(itemId);
-            frameService.deleteItemFromFrame(frame, item);
+            if (!frame.getItems().contains(itemId)) throw new NotFoundException();
+            frameService.deleteItemFromFrame(frame, itemId);
         }
     }
 }

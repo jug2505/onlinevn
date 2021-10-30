@@ -59,14 +59,14 @@ public class FrameService {
     }
 
     @Transactional
-    public Frame addItemToFrame(Frame frame, Item item) {
-        frame.getItems().add(item);
+    public Frame addItemToFrame(Frame frame, Integer itemId) {
+        frame.getItems().add(itemId);
         return frameRepository.save(frame);
     }
 
     @Transactional
-    public Frame deleteItemFromFrame(Frame frame, Item item) {
-        frame.getItems().remove(item);
+    public Frame deleteItemFromFrame(Frame frame, Integer itemId) {
+        frame.getItems().remove(itemId);
         return frameRepository.save(frame);
     }
 }

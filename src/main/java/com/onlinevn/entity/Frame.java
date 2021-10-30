@@ -14,18 +14,12 @@ public class Frame {
     private String name;
     private Integer nextFrame;
     private Integer prevFrame;
-
-    @ManyToMany
-    @JoinTable(
-            name = "frame_item",
-            joinColumns = {@JoinColumn(name = "frame_id")},
-            inverseJoinColumns = {@JoinColumn(name = "item_id")}
-    )
-    private List<Item> items = new ArrayList<>();
+    @ElementCollection
+    private List<Integer> items = new ArrayList<>();
 
     protected Frame() {}
 
-    public Frame(Integer id, Integer novelId, Integer frameType, String text, String name, Integer nextFrame, Integer prevFrame, List<Item> items) {
+    public Frame(Integer id, Integer novelId, Integer frameType, String text, String name, Integer nextFrame, Integer prevFrame, List<Integer> items) {
         this.id = id;
         this.novelId = novelId;
         this.frameType = frameType;
@@ -36,7 +30,7 @@ public class Frame {
         this.items = items;
     }
 
-    public Frame(Integer novelId, Integer frameType, String text, String name, Integer prevFrame, Integer nextFrame, List<Item> items) {
+    public Frame(Integer novelId, Integer frameType, String text, String name, Integer prevFrame, Integer nextFrame, List<Integer> items) {
         this.novelId = novelId;
         this.frameType = frameType;
         this.text = text;
@@ -102,11 +96,11 @@ public class Frame {
         this.prevFrame = prevFrame;
     }
 
-    public List<Item> getItems() {
+    public List<Integer> getItems() {
         return items;
     }
 
-    public void setItems(List<Item> items) {
+    public void setItems(List<Integer> items) {
         this.items = items;
     }
 
