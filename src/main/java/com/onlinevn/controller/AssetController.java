@@ -2,9 +2,14 @@ package com.onlinevn.controller;
 
 import com.onlinevn.entity.Asset;
 import com.onlinevn.service.AssetService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @CrossOrigin
 @RestController
@@ -13,21 +18,21 @@ public class AssetController {
 
     private final AssetService assetService;
 
+    @Value("${upload.path}")
+    private String uploadPath;
+
     public AssetController(AssetService assetService) {
         this.assetService = assetService;
     }
 
     @GetMapping
-    public List<Asset> list(@RequestParam(name = "novelId", required = false) Integer novelId) {
-        assetService.createAsset(new Asset(1, "1", "1", 1));
+    public List<Asset> list(@RequestParam(name = "novelId", required = false) Integer novelId,
+                            @RequestParam(name = "Type", required = false) String type) {
 
-        List<Asset> result;
-        if (novelId != null) {
-            result = assetService.readAssetsByNovelId(novelId);
-        } else {
-            result = assetService.readAll();
-        }
-        return result;
+        if (novelId != null && type != null) return assetService.readAssetsByNovelIdAndType(novelId, type);
+        if (novelId != null) return assetService.readAssetsByNovelId(novelId);
+        if (type != null) return assetService.readAssetsByType(type);
+        return assetService.readAll();
     }
 
     @GetMapping("{id}")
@@ -36,7 +41,22 @@ public class AssetController {
     }
 
     @PostMapping
-    public Asset create(@RequestBody Asset asset) {
+    public Asset create(@RequestBody Asset asset,
+                        @RequestParam("file") MultipartFile file) throws IOException {
+        if (file != null) {
+            File uploadDir = new File(uploadPath);
+
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFilename = uuidFile + "." + file.getOriginalFilename();
+
+            file.transferTo(new File(uploadPath + "/" + resultFilename));
+
+            asset.setFilename(resultFilename);
+        }
         return assetService.createAsset(asset);
     }
 

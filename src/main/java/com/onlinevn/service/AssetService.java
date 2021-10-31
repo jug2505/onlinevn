@@ -24,9 +24,15 @@ public class AssetService {
     }
 
     public List<Asset> readAssetsByNovelId(Integer novelId) {
-        List<Asset> assets = assetRepository.findByNovelId(novelId);
-        if (assets.isEmpty()) throw new NotFoundException();
-        return assets;
+        return assetRepository.findByNovelId(novelId);
+    }
+
+    public List<Asset> readAssetsByNovelIdAndType(Integer novelId, String type) {
+        return assetRepository.findByNovelIdAndType(novelId, type);
+    }
+
+    public List<Asset> readAssetsByType(String type) {
+        return assetRepository.findByType(type);
     }
 
     public Asset readAssetById(Integer id) {
