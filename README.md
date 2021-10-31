@@ -2,9 +2,7 @@
 
 ### Установка проекта
 
-Убедитесь, что у вас установлен [JDK версии 17](https://www.oracle.com/java/technologies/downloads/).
-
-БД Mysql
+Убедитесь, что у вас установлен [JDK версии 17](https://www.oracle.com/java/technologies/downloads/) и база данных [MySQL](https://dev.mysql.com/downloads/installer/)
 
 По-умолчанию:
 user - mysql
