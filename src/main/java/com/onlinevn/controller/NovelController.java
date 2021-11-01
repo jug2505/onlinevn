@@ -2,7 +2,6 @@ package com.onlinevn.controller;
 
 import com.onlinevn.entity.Novel;
 import com.onlinevn.exceptions.BadRequestException;
-import com.onlinevn.exceptions.NotFoundException;
 import com.onlinevn.service.NovelService;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.*;

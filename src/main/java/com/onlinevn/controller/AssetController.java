@@ -27,7 +27,7 @@ public class AssetController {
 
     @GetMapping
     public List<Asset> list(@RequestParam(name = "novelId", required = false) Integer novelId,
-                            @RequestParam(name = "Type", required = false) String type) {
+                            @RequestParam(name = "type", required = false) String type) {
 
         if (novelId != null && type != null) return assetService.readAssetsByNovelIdAndType(novelId, type);
         if (novelId != null) return assetService.readAssetsByNovelId(novelId);
