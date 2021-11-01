@@ -5,7 +5,9 @@
 Убедитесь, что у вас установлен [JDK версии 17](https://www.oracle.com/java/technologies/downloads/) и база данных [MySQL](https://dev.mysql.com/downloads/installer/)
 
 По-умолчанию:
+
 user - mysql
+
 password - 1232
 ```
 create database onlinevn;
@@ -39,31 +41,55 @@ java -jar target/[название].jar
 
 Ассеты (Asset):
 ```
+Integer id
 String filename
 String type
+Integer novelId
 ```
 ```
-GET /asset
+GET /asset?novelId=...&type=...
 GET /asset/{id}
-POST /asset
-PUT /asset
+POST /asset?file=...
+PUT /asset/{id}
+DELETE /asset/{id}
 ```
 
 Отображаемые объекты (Item):
 ```
+Integer id
 Integer coordX
 Integer coordY
-Asset asset
+Integer assetId
 ```
 ```
 GET /item
 GET /item/{id}
 POST /item
-PUT /item
+PUT /item/{id}
+DELETE /item/{id}
 ```
-
+Фреймы (Frame):
+```
+Integer id
+Integer novelId
+Integer frameType
+String text
+String name
+Integer nextFrame
+Integer prevFrame
+List<Integer> items
+```
+```
+GET /frame
+GET /frame/{id}
+POST /frame
+PUT /frame/{id}
+PATCH /frame/{id}?itemId=...
+DELETE /frame/{id}?itemId=...
+```
 Новеллы (Novel):
 ```
+Integer id
 String name
 String description
 Integer genre
@@ -72,28 +98,15 @@ Integer viewCount
 Integer firstFrame
 ```
 ```
-GET /novel
+GET /novel?genre=...
 GET /novel/{id}
 POST /novel
-PUT /novel
+PUT /novel/{id}
+PATCH /novel/{id}
+DELETE /novel/{id}
 ```
 
-Фреймы (Frame):
-```
-Integer novel
-Integer frameType
-String text
-String name
-Integer nextFrame
-Integer prevFrame
-List<Item> items
-```
-```
-GET /frame
-GET /frame/{id}
-POST /frame
-PUT /frame
-```
+
 
 
 
