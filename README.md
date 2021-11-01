@@ -4,6 +4,8 @@
 
 Убедитесь, что у вас установлен [JDK версии 17](https://www.oracle.com/java/technologies/downloads/) и база данных [MySQL](https://dev.mysql.com/downloads/installer/)
 
+На Windows: убедитесь, что запущена служба MySQL80 (Диспетчер задач -> Службы)
+
 По-умолчанию:
 
 user - mysql
