@@ -1,23 +1,31 @@
 package com.onlinevn.service;
 
+import com.onlinevn.entity.Frame;
 import com.onlinevn.entity.Item;
 import com.onlinevn.exceptions.NotFoundException;
 import com.onlinevn.repository.AssetRepository;
+import com.onlinevn.repository.FrameRepository;
 import com.onlinevn.repository.ItemRepository;
+import com.onlinevn.repository.NovelRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ItemService {
 
-    private final ItemRepository itemRepository;
     private final AssetRepository assetRepository;
+    private final ItemRepository itemRepository;
+    private final FrameRepository frameRepository;
+    private final NovelRepository novelRepository;
 
-    public ItemService(ItemRepository itemRepository, AssetRepository assetRepository) {
-        this.itemRepository = itemRepository;
+    public ItemService(AssetRepository assetRepository, ItemRepository itemRepository, FrameRepository frameRepository, NovelRepository novelRepository) {
         this.assetRepository = assetRepository;
+        this.itemRepository = itemRepository;
+        this.frameRepository = frameRepository;
+        this.novelRepository = novelRepository;
     }
 
     @Transactional
@@ -52,7 +60,17 @@ public class ItemService {
     @Transactional
     public void delete(Integer id) {
         if (itemRepository.existsById(id)) {
-            itemRepository.deleteById(id);
+            Item item = itemRepository.getById(id);
+            Integer novelId = assetRepository.getById(item.getAssetId()).getNovelId();
+            Integer nextFrame = novelRepository.getById(novelId).getFirstFrame();
+            while (nextFrame != null) {
+                Frame frame = frameRepository.getById(nextFrame);
+                frame.getItems().remove(item.getId());
+                frameRepository.save(frame);
+                nextFrame = frame.getNextFrame();
+            }
+            itemRepository.delete(item);
+
         } else {
             throw new NotFoundException();
         }

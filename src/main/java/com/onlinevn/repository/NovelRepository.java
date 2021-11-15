@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface NovelRepository extends JpaRepository<Novel, Integer> {
     List<Novel> findByGenre(Integer genre);
+    Novel getByFirstFrame(Integer firstFrame);
 }

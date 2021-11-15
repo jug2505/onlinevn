@@ -1,20 +1,30 @@
 package com.onlinevn.service;
 
 import com.onlinevn.entity.Frame;
+import com.onlinevn.entity.Item;
 import com.onlinevn.entity.Novel;
 import com.onlinevn.exceptions.NotFoundException;
+import com.onlinevn.repository.AssetRepository;
 import com.onlinevn.repository.FrameRepository;
+import com.onlinevn.repository.ItemRepository;
 import com.onlinevn.repository.NovelRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class NovelService {
+    private final AssetRepository assetRepository;
+    private final ItemRepository itemRepository;
+    private final FrameRepository frameRepository;
     private final NovelRepository novelRepository;
 
-    public NovelService(NovelRepository novelRepository) {
+    public NovelService(AssetRepository assetRepository, ItemRepository itemRepository, FrameRepository frameRepository, NovelRepository novelRepository) {
+        this.assetRepository = assetRepository;
+        this.itemRepository = itemRepository;
+        this.frameRepository = frameRepository;
         this.novelRepository = novelRepository;
     }
 
@@ -49,7 +59,19 @@ public class NovelService {
     @Transactional
     public void delete(Integer id) {
         if (novelRepository.existsById(id)) {
-            novelRepository.deleteById(id);
+            Novel novel = novelRepository.getById(id);
+            Integer nextFrame = novel.getFirstFrame();
+            while (nextFrame != null) {
+                Frame frame = frameRepository.getById(nextFrame);
+                List<Integer> itemsIds = frame.getItems();
+                for (Integer itemId : itemsIds) {
+                    itemRepository.findById(itemId).ifPresent(item -> assetRepository.deleteById(item.getAssetId()));
+                    itemRepository.deleteById(itemId);
+                }
+                nextFrame = frame.getNextFrame();
+                frameRepository.delete(frame);
+            }
+            novelRepository.delete(novel);
         } else {
             throw new NotFoundException();
         }

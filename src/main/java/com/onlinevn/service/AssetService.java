@@ -1,20 +1,32 @@
 package com.onlinevn.service;
 
 import com.onlinevn.entity.Asset;
+import com.onlinevn.entity.Frame;
+import com.onlinevn.entity.Item;
 import com.onlinevn.exceptions.NotFoundException;
 import com.onlinevn.repository.AssetRepository;
+import com.onlinevn.repository.FrameRepository;
+import com.onlinevn.repository.ItemRepository;
+import com.onlinevn.repository.NovelRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AssetService {
 
     private final AssetRepository assetRepository;
+    private final ItemRepository itemRepository;
+    private final FrameRepository frameRepository;
+    private final NovelRepository novelRepository;
 
-    public AssetService(AssetRepository assetRepository) {
+    public AssetService(AssetRepository assetRepository, ItemRepository itemRepository, FrameRepository frameRepository, NovelRepository novelRepository) {
         this.assetRepository = assetRepository;
+        this.itemRepository = itemRepository;
+        this.frameRepository = frameRepository;
+        this.novelRepository = novelRepository;
     }
 
     @Transactional
@@ -54,9 +66,21 @@ public class AssetService {
     }
 
     @Transactional
-    public void delete(Integer id) {
-        if (assetRepository.existsById(id)) {
-            assetRepository.deleteById(id);
+    public void delete(Integer assetId) {
+        if (assetRepository.existsById(assetId)) {
+            if (itemRepository.existsByAssetId(assetId)) {
+                List<Item> items = itemRepository.findByAssetId(assetId);
+                Integer nextFrame = novelRepository.getById(assetRepository.getById(assetId).getNovelId()).getFirstFrame();
+                while (nextFrame != null) {
+                    Frame frame = frameRepository.getById(nextFrame);
+                    frame.getItems().removeAll(items.stream().map(Item::getId).collect(Collectors.toList()));
+                    frameRepository.save(frame);
+                    nextFrame = frame.getNextFrame();
+                }
+                itemRepository.deleteAll(items);
+            }
+            assetRepository.deleteById(assetId);
+
         } else {
             throw new NotFoundException();
         }

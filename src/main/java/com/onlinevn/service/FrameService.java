@@ -3,8 +3,11 @@ package com.onlinevn.service;
 import com.onlinevn.entity.Asset;
 import com.onlinevn.entity.Frame;
 import com.onlinevn.entity.Item;
+import com.onlinevn.entity.Novel;
 import com.onlinevn.exceptions.NotFoundException;
 import com.onlinevn.repository.FrameRepository;
+import com.onlinevn.repository.ItemRepository;
+import com.onlinevn.repository.NovelRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,9 +17,12 @@ import java.util.List;
 public class FrameService {
 
     private final FrameRepository frameRepository;
+    private final NovelRepository novelRepository;
 
-    public FrameService(FrameRepository frameRepository) {
+
+    public FrameService(FrameRepository frameRepository, NovelRepository novelRepository) {
         this.frameRepository = frameRepository;
+        this.novelRepository = novelRepository;
     }
 
     @Transactional
@@ -52,7 +58,33 @@ public class FrameService {
     @Transactional
     public void delete(Integer id) {
         if (frameRepository.existsById(id)) {
-            frameRepository.deleteById(id);
+            Frame frame = frameRepository.getById(id);
+            Novel novel = novelRepository.getByFirstFrame(id);
+            if (novel != null) {
+                if (frame.getNextFrame() != null) {
+                    Frame nextFrame = frameRepository.getById(frame.getNextFrame());
+                    nextFrame.setPrevFrame(null);
+                    frameRepository.save(nextFrame);
+                    novel.setFirstFrame(nextFrame.getId());
+                } else {
+                    novel.setFirstFrame(null);
+                }
+                novelRepository.save(novel);
+            } else {
+                if (frame.getNextFrame() == null) {
+                    Frame prevFrame = frameRepository.getById(frame.getPrevFrame());
+                    prevFrame.setNextFrame(null);
+                    frameRepository.save(prevFrame);
+                } else {
+                    Frame nextFrame = frameRepository.getById(frame.getNextFrame());
+                    Frame prevFrame = frameRepository.getById(frame.getPrevFrame());
+                    nextFrame.setPrevFrame(frame.getPrevFrame());
+                    prevFrame.setNextFrame(frame.getNextFrame());
+                    frameRepository.save(prevFrame);
+                    frameRepository.save(nextFrame);
+                }
+            }
+            frameRepository.delete(frame);
         } else {
             throw new NotFoundException();
         }
