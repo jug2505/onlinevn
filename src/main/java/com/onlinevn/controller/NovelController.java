@@ -2,6 +2,7 @@ package com.onlinevn.controller;
 
 import com.onlinevn.entity.Novel;
 import com.onlinevn.exceptions.BadRequestException;
+import com.onlinevn.service.FrameService;
 import com.onlinevn.service.NovelService;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.*;
@@ -17,15 +18,23 @@ import java.util.Map;
 public class NovelController {
 
     private final NovelService novelService;
+    private final FrameService frameService;
 
-    public NovelController(NovelService novelService) {
+    public NovelController(NovelService novelService, FrameService frameService) {
         this.novelService = novelService;
+        this.frameService = frameService;
     }
 
     @GetMapping
     public List<Novel> list(@RequestParam(name = "genre", required = false) Integer genre) {
         if (genre != null) return novelService.readNovelsByGenre(genre);
         return novelService.readAll();
+    }
+
+    @GetMapping("{id}/frame/count")
+    public Map<String, Long> frameCount(@PathVariable Integer id) {
+        return new HashMap<String, Long>() {{ put("count", frameService.countByNovelId(id)); }};
+
     }
 
     @GetMapping("/count")

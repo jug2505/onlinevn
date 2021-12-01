@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface FrameRepository extends JpaRepository<Frame, Integer> {
     List<Frame> findByNovelId(Integer novelId);
+    long countByNovelId(Integer novelId);
 }

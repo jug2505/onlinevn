@@ -40,6 +40,10 @@ public class FrameService {
         return frames;
     }
 
+    public long countByNovelId(Integer novelId) {
+        return frameRepository.countByNovelId(novelId);
+    }
+
     public Frame readFrameById(Integer id) {
         return frameRepository.findById(id).orElseThrow(NotFoundException::new);
     }

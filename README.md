@@ -98,7 +98,9 @@ Integer firstFrame
 ```
 GET /novel?genre=...
 GET /novel/
-GET /novel/count
+GET /novel/count - общее количество новелл
+GET /novel/{id}
+GET /novel/{id}/frame/count - количество фреймов в новелле
 POST /novel
 PUT /novel/{id}
 PATCH /novel/{id}
