@@ -51,7 +51,7 @@ PUT /asset/{id}
 DELETE /asset/{id}
 ```
 
-Отображаемые объекты (Item):
+Отображаемые объекты (Item): поле assetId обязательно при создании
 ```
 Integer id
 Integer coordX

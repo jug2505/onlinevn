@@ -31,8 +31,7 @@ public class ItemService {
     @Transactional
     public Item createItem(Item item) {
         if (!assetRepository.existsById(item.getAssetId())) throw new NotFoundException();
-        return itemRepository.findById(item.getId())
-                .orElse(itemRepository.save((item)));
+        return itemRepository.save(item);
     }
 
     public Item readItemById(Integer id) {

@@ -30,8 +30,7 @@ public class NovelService {
 
     @Transactional
     public Novel createNovel(Novel novel) {
-        return novelRepository.findById(novel.getId())
-                .orElse(novelRepository.save(novel));
+        return novelRepository.save(novel);
     }
 
     public List<Novel> readAll() {

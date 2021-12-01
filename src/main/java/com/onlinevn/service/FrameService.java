@@ -27,8 +27,7 @@ public class FrameService {
 
     @Transactional
     public Frame createFrame(Frame frame) {
-        return frameRepository.findById(frame.getId())
-                .orElse(frameRepository.save(frame));
+        return frameRepository.save(frame);
     }
 
     public List<Frame> readAll() {

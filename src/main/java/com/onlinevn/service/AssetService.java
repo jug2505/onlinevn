@@ -31,8 +31,7 @@ public class AssetService {
 
     @Transactional
     public Asset createAsset(Asset asset) {
-        return assetRepository.findById(asset.getId())
-                .orElse(assetRepository.save(asset));
+        return assetRepository.save(asset);
     }
 
     public List<Asset> readAssetsByNovelId(Integer novelId) {
