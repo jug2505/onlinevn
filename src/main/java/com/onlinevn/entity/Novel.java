@@ -12,27 +12,30 @@ public class Novel {
     private Integer genre;
     private Integer status;
     private Integer viewCount;
+    private Integer rating;
 
     private Integer firstFrame;
 
     protected Novel() {}
 
-    public Novel(Integer id, String name, String description, Integer genre, Integer status, Integer viewCount, Integer firstFrame) {
+    public Novel(Integer id, String name, String description, Integer genre, Integer status, Integer viewCount, Integer rating, Integer firstFrame) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.genre = genre;
         this.status = status;
         this.viewCount = viewCount;
+        this.rating = rating;
         this.firstFrame = firstFrame;
     }
 
-    public Novel(String name, String description, Integer genre, Integer status, Integer viewCount, Integer firstFrame) {
+    public Novel(String name, String description, Integer genre, Integer status, Integer viewCount, Integer rating, Integer firstFrame) {
         this.name = name;
         this.description = description;
         this.genre = genre;
         this.status = status;
         this.viewCount = viewCount;
+        this.rating = rating;
         this.firstFrame = firstFrame;
     }
 
@@ -92,17 +95,25 @@ public class Novel {
         this.firstFrame = firstFrame;
     }
 
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Novel novel = (Novel) o;
-        return id.equals(novel.id) && name.equals(novel.name) && description.equals(novel.description) && genre.equals(novel.genre) && status.equals(novel.status) && viewCount.equals(novel.viewCount) && Objects.equals(firstFrame, novel.firstFrame);
+        return id.equals(novel.id) && Objects.equals(name, novel.name) && Objects.equals(description, novel.description) && Objects.equals(genre, novel.genre) && Objects.equals(status, novel.status) && Objects.equals(viewCount, novel.viewCount) && Objects.equals(rating, novel.rating) && Objects.equals(firstFrame, novel.firstFrame);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, genre, status, viewCount, firstFrame);
+        return Objects.hash(id, name, description, genre, status, viewCount, rating, firstFrame);
     }
 
     @Override
@@ -114,6 +125,7 @@ public class Novel {
                 ", genre=" + genre +
                 ", status=" + status +
                 ", viewCount=" + viewCount +
+                ", rating=" + rating +
                 ", firstFrame=" + firstFrame +
                 '}';
     }
