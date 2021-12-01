@@ -37,6 +37,10 @@ public class NovelService {
         return novelRepository.findAll();
     }
 
+    public long count() {
+        return novelRepository.count();
+    }
+
     public Novel readNovelById(Integer id) {
         return novelRepository.findById(id).orElseThrow(NotFoundException::new);
     }

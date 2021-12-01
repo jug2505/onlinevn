@@ -7,6 +7,7 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,11 @@ public class NovelController {
     public List<Novel> list(@RequestParam(name = "genre", required = false) Integer genre) {
         if (genre != null) return novelService.readNovelsByGenre(genre);
         return novelService.readAll();
+    }
+
+    @GetMapping("/count")
+    public Map<String, Long> count() {
+        return new HashMap<String, Long>(){{ put("count", novelService.count()); }};
     }
 
     @GetMapping("{id}")

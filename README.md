@@ -91,12 +91,14 @@ String name
 String description
 Integer genre
 Integer status
+Integer rating
 Integer viewCount
 Integer firstFrame
 ```
 ```
 GET /novel?genre=...
-GET /novel/{id}
+GET /novel/
+GET /novel/count
 POST /novel
 PUT /novel/{id}
 PATCH /novel/{id}
