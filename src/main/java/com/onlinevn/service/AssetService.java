@@ -54,6 +54,10 @@ public class AssetService {
         return assetRepository.findAll();
     }
 
+    public long count() {
+        return assetRepository.count();
+    }
+
     @Transactional
     public Asset updateAsset(Asset asset) {
         if (assetRepository.existsById(asset.getId())) {

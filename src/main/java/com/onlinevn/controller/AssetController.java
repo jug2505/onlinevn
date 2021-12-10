@@ -8,7 +8,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @CrossOrigin
@@ -38,6 +40,11 @@ public class AssetController {
     @GetMapping("{id}")
     public Asset getOne(@PathVariable Integer id) {
         return assetService.readAssetById(id);
+    }
+
+    @GetMapping("/count")
+    public Map<String, Long> count() {
+        return new HashMap<String, Long>(){{ put("count", assetService.count()); }};
     }
 
     @PostMapping
