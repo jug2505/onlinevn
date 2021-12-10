@@ -48,6 +48,10 @@ public class FrameService {
         return frameRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 
+    public long count() {
+        return frameRepository.count();
+    }
+
     @Transactional
     public Frame updateFrame(Frame frame) {
         if (frameRepository.existsById(frame.getId())) {

@@ -8,7 +8,9 @@ import com.onlinevn.service.ItemService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -31,6 +33,11 @@ public class FrameController {
     @GetMapping("{id}")
     public Frame getOne(@PathVariable Integer id) {
         return frameService.readFrameById(id);
+    }
+
+    @GetMapping("/count")
+    public Map<String, Long> count() {
+        return new HashMap<String, Long>(){{ put("count", frameService.count()); }};
     }
 
     @PostMapping

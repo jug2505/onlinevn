@@ -46,6 +46,7 @@ Integer novelId
 ```
 GET /asset?novelId=...&type=...
 GET /asset/{id}
+GET /asset/count - общее количество ассетов
 POST /asset?file=...
 PUT /asset/{id}
 DELETE /asset/{id}
@@ -79,6 +80,7 @@ List<Integer> items
 ```
 GET /frame
 GET /frame/{id}
+GET /frame/count - общее количество фреймов
 POST /frame
 PUT /frame/{id}
 PATCH /frame/{id}?itemId=...
