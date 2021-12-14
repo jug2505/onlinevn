@@ -12,13 +12,13 @@ public class Novel {
     private Integer genre;
     private Integer status;
     private Integer viewCount;
-    private Integer rating;
+    private Float rating;
 
     private Integer firstFrame;
 
     protected Novel() {}
 
-    public Novel(Integer id, String name, String description, Integer genre, Integer status, Integer viewCount, Integer rating, Integer firstFrame) {
+    public Novel(Integer id, String name, String description, Integer genre, Integer status, Integer viewCount, Float rating, Integer firstFrame) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -29,7 +29,7 @@ public class Novel {
         this.firstFrame = firstFrame;
     }
 
-    public Novel(String name, String description, Integer genre, Integer status, Integer viewCount, Integer rating, Integer firstFrame) {
+    public Novel(String name, String description, Integer genre, Integer status, Integer viewCount, Float rating, Integer firstFrame) {
         this.name = name;
         this.description = description;
         this.genre = genre;
@@ -95,11 +95,11 @@ public class Novel {
         this.firstFrame = firstFrame;
     }
 
-    public Integer getRating() {
+    public Float getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(Float rating) {
         this.rating = rating;
     }
 
